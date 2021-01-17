@@ -1,0 +1,41 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Script parameters
+OUT_DIR=dist
+APP_NAME=simple-dictionary-server
+APP_MAVEN_SUFFIX=1.0-SNAPSHOT-jar-with-dependencies
+MAVEN_TARGET_DIR=target
+
+# ----------------------------------------------------------------------------
+# Script execution
+
+echo Preparing to make...
+
+APP_MAVEN_NAME=$APP_NAME-$APP_MAVEN_SUFFIX
+
+#Directory where script has been started.
+DIR="$( cd "$( dirname "$0" )" >/dev/null 2>&1 && pwd )"
+
+if [ ! -d $DIR/$OUT_DIR ]; then
+  echo [ERR ] Cannot find dir [$OUT_DIR] for output files. Making has been canceled.
+  exit 1
+fi
+chmod +x $DIR/mvnw
+echo [ OK ] Preparation completed successfully. Running Maven wrapper to make...
+if ! $DIR/mvnw package
+then
+  echo [ERR ] Maven building finished with error. Making has been canceled.
+  exit 1
+fi
+echo [ OK ] Maven building finished successfully. Copying file [$DIR/$MAVEN_TARGET_DIR/$APP_MAVEN_NAME.jar] to file [$DIR/$OUT_DIR/$APP_NAME.jar]
+if ! yes | cp $DIR/$MAVEN_TARGET_DIR/$APP_MAVEN_NAME.jar $DIR/$OUT_DIR/$APP_NAME.jar
+then
+  echo [ERR ] Copying finished with error. Making has been canceled.
+  exit 1
+fi
+if [ "$1" != "-kt" ]
+then
+  echo [ OK ] Copying finished successfully. Directory [$DIR/$MAVEN_TARGET_DIR] is being removed...
+  rm -rf $DIR/$MAVEN_TARGET_DIR
+fi
+echo [ OK ] All operations were completed successfully. The application is ready for use.

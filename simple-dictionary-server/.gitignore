@@ -1,0 +1,12 @@
+/.settings/
+/bin/
+/dist/classes/
+/dist/*.jar
+.classpath
+.project
+/misc/
+/target/
+/.mvn/wrapper/*.jar
+*.iml
+/.idea/
+debug.log
