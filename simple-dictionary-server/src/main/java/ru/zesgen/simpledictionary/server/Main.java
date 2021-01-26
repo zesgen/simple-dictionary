@@ -1,5 +1,6 @@
 package ru.zesgen.simpledictionary.server;
 
+import ru.zesgen.simpledictionary.server.ApplicationContext;
 import ru.zesgen.simpledictionary.server.utility.UserInputParser;
 import ru.zesgen.simpledictionary.server.utility.UserInputParserImpl;
 
@@ -24,7 +25,7 @@ public class Main {
     public static final String AFTER_INIT_MESSAGE =
             "The test dictionary server up and running. It listens to the port: ";
     public static final List<String> showHelpParameterValues
-            = Collections.unmodifiableList(Arrays.asList("/?", "-help", "--help"));
+            = Collections.unmodifiableList(Arrays.asList("-help", "--help"));
 
     static ApplicationContext applicationContext = new ApplicationContext();
     static UserInputParser userInputParser = new UserInputParserImpl();
